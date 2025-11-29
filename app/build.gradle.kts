@@ -36,7 +36,13 @@ android {
     buildTypes {
         release {
             proguardFiles(
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
+            multiDexEnabled = true
+            vcsInfo.include = false
                 getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-debuginfo-remove.pro",
                 "proguard-rules.pro"
             )
 
