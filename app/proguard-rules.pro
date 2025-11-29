@@ -1,40 +1,51 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-dontwarn org.bouncycastle.jsse.BCSSLParameters
+-dontwarn org.bouncycastle.jsse.BCSSLSocket
+-dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
+-dontwarn org.conscrypt.Conscrypt$Version
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+-dontwarn org.openjsse.javax.net.ssl.SSLParameters
+-dontwarn org.openjsse.javax.net.ssl.SSLSocket
+-dontwarn org.openjsse.net.ssl.OpenJSSE
+-dontwarn java.beans.Introspector
+-dontwarn java.beans.VetoableChangeListener
+-dontwarn java.beans.VetoableChangeSupport
 
-# disable obfuscation
--dontobfuscate
+# Keep ini4j Service Provider Interface
+-keep,allowobfuscation,allowoptimization public class org.*
 
-# Keep JNI interface
--keep class org.fcitx.fcitx5.android.core.* { *; }
--keep class org.fcitx.fcitx5.android.data.pinyin.customphrase.PinyinCustomPhrase {
-    public <init>(...);
-}
-
-# Keep dependency magic
--keep class ** extends org.mechdancer.dependency.Component {
-    int hashCode();
-    boolean equals(java.lang.Object);
-}
-
-# remove kotlin null checks
+# Kotlin
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkNotNull(...);
-    static void checkExpressionValueIsNotNull(...);
-    static void checkNotNullExpressionValue(...);
-    static void checkReturnedValueIsNotNull(...);
-    static void checkFieldIsNotNull(...);
-    static void checkParameterIsNotNull(...);
-    static void checkNotNullParameter(...);
+    public static void check*(...);
+    public static void throw*(...);
 }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
--keepattributes SourceFile,LineNumberTable
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {  
+    public static void checkNotNull(...);  
+    public static void checkParameterIsNotNull(...);  
+    public static void checkNotNullParameter(...);  
+    public static void checkExpressionValueIsNotNull(...);  
+    public static void checkNotNullExpressionValue(...);  
+    public static void checkReturnedValueIsNotNull(...);  
+    public static void throwUninitializedPropertyAccessException(...);  
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-assumenosideeffects class android.util.Log {  
+    public static *** d(...);  
+    public static *** v(...);  
+    public static *** i(...);  
+}
+
+-dontobfuscate
+-allowaccessmodification
+-renamesourcefileattribute ""  
+-keepattributes !SourceFile,!LineNumberTable,Exceptions,Signature,InnerClasses,EnclosingMethod 
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-optimizationpasses 5
+-allowaccessmodification
+-mergeinterfacesaggressively
+-renamesourcefileattribute SourceFile
