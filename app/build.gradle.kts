@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.lsplugin.resopt)
+    alias(libs.plugins.lsplugin.cmaker)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -66,6 +69,16 @@ android {
         generateLocaleConfig = true
     }
 }
+
+    packaging {
+        resources {
+        merges += "META-INF/com/google/android/**"  
+        excludes += "kotlin/**"  
+        excludes += "assets/README.md"  
+        excludes += "assets/dexopt/**"  
+        excludes += "META-INF/**" 
+        }
+    }
 
 kotlin {
     sourceSets.configureEach {
