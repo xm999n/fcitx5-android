@@ -54,6 +54,16 @@ android {
             resValue("string", "app_name", "@string/app_name_release")
         }
         debug {
+            proguardFiles(
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
+            multiDexEnabled = true
+            vcsInfo.include = false
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-debuginfo-remove.pro",
+                "proguard-rules.pro"
+            )
             resValue("mipmap", "app_icon", "@mipmap/ic_launcher_debug")
             resValue("mipmap", "app_icon_round", "@mipmap/ic_launcher_round_debug")
             resValue("string", "app_name", "@string/app_name_debug")
